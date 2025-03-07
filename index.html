@@ -205,11 +205,21 @@
         const username = document.getElementById('adminUsername').value;
         const password = document.getElementById('adminPassword').value;
 
-        if (username === 'admin' && password === 'securepassword') {
+        // Hardcoded credentials (to be stored in a database in real-world)
+        const storedUsername = 'admindianne';
+        const storedPassword = 'Chat@2025!';
+
+        if (username === storedUsername && password === storedPassword) {
+            sessionStorage.setItem('isAdmin', 'true');  // Store session
             window.location.href = 'admin-dashboard.html';
         } else {
             alert('Invalid credentials');
         }
+    }
+
+    // Ensure Admin Stays Logged In
+    if (sessionStorage.getItem('isAdmin') === 'true') {
+        window.location.href = 'admin-dashboard.html';
     }
 </script>
 
