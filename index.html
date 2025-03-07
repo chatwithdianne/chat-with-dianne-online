@@ -120,6 +120,36 @@
     <input type="text" id="accessCode" placeholder="Enter your access code">
     <button onclick="requestAccess()">Let’s Chat!</button>
 
+<script>
+    function requestAccess() {
+        const code = document.getElementById('accessCode').value.trim();
+        
+        // Sample data of stored booking codes (for demo purposes)
+        const validCodes = ["ABC123", "XYZ456", "LMN789"];
+
+        if (!validCodes.includes(code)) {
+            alert('Invalid access code! Please check your email.');
+            return;
+        }
+
+        // Show "Awaiting Approval" pop-up
+        document.getElementById('waitingPopup').style.display = 'block';
+
+        // Simulate admin approval after a few seconds (Replace this with real admin approval system)
+        setTimeout(() => {
+            document.getElementById('waitingPopup').style.display = 'none';
+            alert("✅ Admin has accepted you! Redirecting to chatroom...");
+            window.location.href = 'chatroom.html?code=' + encodeURIComponent(code);
+        }, 5000); // Simulating 5 seconds wait for admin approval
+    }
+
+ <div class="book-section">
+            No code yet? <a onclick="redirectToBooking()">Book a chat</a> and we’ll send your access code via email 💖
+        </div>
+
+    function redirectToBooking() {
+        window.location.href = "booking.html"
+    
     <div class="admin-link" onclick="showAdminLogin()">Admin Login</div>
 </div>
 
