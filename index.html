@@ -3,165 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Dianne 💬</title>
+    <title>Chat with Dianne - Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            background-color: #fbeaec; /* Soft pink */
-            background-image: radial-gradient(white 10%, transparent 10%), radial-gradient(white 10%, transparent 10%);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px; /* Polka dot background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            animation: fadeIn 1.5s ease-out;
+        :root {
+            --primary-pink: #f7d6e0;
+            --gold: #d4af37;
+            --text-dark: #333;
+            --background: #fff8f9;
         }
 
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text-dark);
         }
 
         .container {
-            background: white;
-            width: 90%;
-            max-width: 450px;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            border: 4px solid #000; /* Signature Kate Spade black trim */
-            position: relative;
-            animation: slideIn 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            background-image: url('https://www.transparenttextures.com/patterns/white-diamond.png');
         }
 
-        /* Slide-in animation */
-        @keyframes slideIn {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .welcome-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
         }
 
         h1 {
-            font-size: 26px;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 12px;
-            font-family: 'Georgia', serif; /* Classic elegant serif */
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin: 0 0 10px;
         }
 
         p {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 24px;
-        }
-
-        .input-group {
-            margin: 20px 0;
+            margin: 0 0 20px;
         }
 
         input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #000;
-            border-radius: 30px;
-            font-size: 14px;
-            outline: none;
-            font-family: 'Poppins', sans-serif;
-            transition: transform 0.3s ease;
-        }
-
-        input:focus {
-            transform: scale(1.05);
+            padding: 12px;
+            border: 2px solid var(--primary-pink);
+            border-radius: 8px;
+            margin: 10px 0;
         }
 
         button {
-            background-color: #f0c14b; /* Gold button */
-            color: #000;
+            background: var(--gold);
+            color: #fff;
             border: none;
-            padding: 14px 24px;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 30px;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: transform 0.3s ease;
         }
 
         button:hover {
-            background-color: #e0b144;
-            transform: translateY(-3px); /* Slight lift on hover */
+            transform: translateY(-3px);
         }
 
-        footer {
-            margin-top: 15px;
+        .note {
             font-size: 12px;
-            color: #888;
-            font-family: 'Poppins', sans-serif;
+            margin-top: 10px;
         }
 
-        /* Floating decorative gold dots (animated) */
-        .gold-dot {
+        .book-section {
+            margin-top: 20px;
+        }
+
+        .book-section a {
+            color: var(--gold);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .admin-link {
+            margin-top: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--text-dark);
+            opacity: 0.7;
+        }
+
+        .admin-link:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Admin Modal */
+        .admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-modal .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid var(--primary-pink);
+            border-radius: 5px;
+        }
+
+        .close-btn {
             position: absolute;
-            width: 12px;
-            height: 12px;
-            background-color: #f0c14b;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: float 6s infinite ease-in-out;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .gold-dot:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; }
-        .gold-dot:nth-child(2) { top: 15%; right: 10%; animation-delay: 1s; }
-        .gold-dot:nth-child(3) { bottom: 20%; left: 5%; animation-delay: 2s; }
-        .gold-dot:nth-child(4) { bottom: 5%; right: 15%; animation-delay: 3s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>💬 Chat with Dianne 💬</h1>
-    <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
+    <div class="welcome-card">
+        <h1>✨ Chat with Dianne ✨</h1>
+        <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
 
-    <div class="input-group">
-        <input type="text" id="accessCode" placeholder="Enter Access Code">
+        <input type="text" id="accessCode" placeholder="Enter your access code">
+        <button onclick="validateCode()">Let’s Chat!</button>
+        <div class="note">⏰ Your code only works during your scheduled time. Check your email confirmation!</div>
+
+        <div class="book-section">
+            No code yet? <a href="calendar.html">Book a chat</a> and we’ll send your access code via email 💖
+        </div>
+
+        <!-- Hidden Admin Access Link -->
+        <div class="admin-link" onclick="showAdminLogin()">Admin Login</div>
     </div>
-    <button onclick="validateCode()">Start Chat</button>
+</div>
 
-    <footer>💌 Need help? Message me anytime!</footer>
-
-    <!-- Floating Decorative Gold Dots -->
-    <div class="gold-dot"></div>
-    <div class="gold-dot"></div>
-    <div class="gold-dot"></div>
-    <div class="gold-dot"></div>
+<!-- Admin Login Modal -->
+<div class="admin-modal" id="adminModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeAdminLogin()">&times;</span>
+        <h2>Admin Login</h2>
+        <input type="text" id="adminUsername" placeholder="Username">
+        <input type="password" id="adminPassword" placeholder="Password">
+        <button onclick="validateAdmin()">Login</button>
+    </div>
 </div>
 
 <script>
-    const validCodes = ["DIANNE123", "HELLO2025", "CHATWITHME"]; // Your codes
-
     function validateCode() {
-        const inputCode = document.getElementById('accessCode').value.trim();
-        if (validCodes.includes(inputCode)) {
-            window.location.href = "chatroom.html"; // Your next page (chatroom)
+        const code = document.getElementById('accessCode').value.trim();
+        if (code === "") {
+            alert('Please enter your access code.');
         } else {
-            alert("Oops! Invalid code. Please double-check and try again!");
+            window.location.href = 'chatroom.html?code=' + encodeURIComponent(code);
+        }
+    }
+
+    function showAdminLogin() {
+        document.getElementById('adminModal').style.display = 'flex';
+    }
+
+    function closeAdminLogin() {
+        document.getElementById('adminModal').style.display = 'none';
+    }
+
+    function validateAdmin() {
+        const username = document.getElementById('adminUsername').value;
+        const password = document.getElementById('adminPassword').value;
+
+        if (username === 'admin' && password === 'securepassword') {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            alert('Invalid credentials');
         }
     }
 </script>
