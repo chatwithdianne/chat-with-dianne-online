@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Dianne 💬</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #fbeaec; /* Soft pink */
+            background-image: radial-gradient(white 10%, transparent 10%), radial-gradient(white 10%, transparent 10%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px; /* Polka dot background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 4px solid #000; /* Signature Kate Spade black trim */
+            position: relative;
+            animation: slideIn 1s ease-out;
+        }
+
+        /* Slide-in animation */
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+            font-family: 'Georgia', serif; /* Classic elegant serif */
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #000;
+            border-radius: 30px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.3s ease;
+        }
+
+        input:focus {
+            transform: scale(1.05);
+        }
+
+        button {
+            background-color: #f0c14b; /* Gold button */
+            color: #000;
+            border: none;
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #e0b144;
+            transform: translateY(-3px); /* Slight lift on hover */
+        }
+
+        footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Floating decorative gold dots (animated) */
+        .gold-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #f0c14b;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        .gold-dot:nth-child(1) { top: 5%; left: 10%; animation-delay: 0s; }
+        .gold-dot:nth-child(2) { top: 15%; right: 10%; animation-delay: 1s; }
+        .gold-dot:nth-child(3) { bottom: 20%; left: 5%; animation-delay: 2s; }
+        .gold-dot:nth-child(4) { bottom: 5%; right: 15%; animation-delay: 3s; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>💬 Chat with Dianne 💬</h1>
+    <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
+
+    <div class="input-group">
+        <input type="text" id="accessCode" placeholder="Enter Access Code">
+    </div>
+    <button onclick="validateCode()">Start Chat</button>
+
+    <footer>💌 Need help? Message me anytime!</footer>
+
+    <!-- Floating Decorative Gold Dots -->
+    <div class="gold-dot"></div>
+    <div class="gold-dot"></div>
+    <div class="gold-dot"></div>
+    <div class="gold-dot"></div>
+</div>
+
+<script>
+    const validCodes = ["DIANNE123", "HELLO2025", "CHATWITHME"]; // Your codes
+
+    function validateCode() {
+        const inputCode = document.getElementById('accessCode').value.trim();
+        if (validCodes.includes(inputCode)) {
+            window.location.href = "chatroom.html"; // Your next page (chatroom)
+        } else {
+            alert("Oops! Invalid code. Please double-check and try again!");
+        }
+    }
+</script>
+
+</body>
+</html>
