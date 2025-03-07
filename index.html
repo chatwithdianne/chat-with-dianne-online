@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Chat - Chat with Dianne</title>
+    <title>Chat with Dianne - Welcome</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,21 +24,20 @@
             height: 100vh;
             padding: 20px;
         }
-        .booking-container {
+        .container {
+            text-align: center;
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            text-align: center;
-            max-width: 600px;
+            max-width: 500px;
             animation: fadeInUp 1s ease-out;
-            position: relative;
         }
         h1 {
             font-family: 'Playfair Display', serif;
             color: var(--gold);
         }
-        input, select, button {
+        input, button {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -56,24 +55,13 @@
         button:hover {
             transform: translateY(-3px);
         }
-        .confirmation {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background: var(--primary-pink);
-            border-radius: 8px;
-            font-weight: bold;
-        }
         .admin-link {
-            margin-top: 30px;
-            font-size: 12px;
+            margin-top: 20px;
+            font-size: 14px;
             cursor: pointer;
             color: var(--text-dark);
             opacity: 0.7;
-        }
-        .admin-link:hover {
             text-decoration: underline;
-            opacity: 1;
         }
         .admin-modal {
             display: none;
@@ -87,7 +75,7 @@
             align-items: center;
             z-index: 1000;
         }
-        .admin-modal .modal-content {
+        .modal-content {
             background: white;
             padding: 30px;
             border-radius: 10px;
@@ -96,10 +84,12 @@
             position: relative;
             animation: fadeIn 0.5s ease-out;
         }
-        .error {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
         }
         .show-password {
             display: flex;
@@ -110,6 +100,11 @@
             cursor: pointer;
             margin-top: 5px;
         }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -118,41 +113,20 @@
 </head>
 <body>
 
-<div class="booking-container">
-    <h1>📅 Book a Chat with Dianne</h1>
-    <p>Select your preferred date and time slot:</p>
+<div class="container">
+    <h1>✨ Chat with Dianne ✨</h1>
+    <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
 
-    <label for="bookingDate">Choose a Date:</label>
-    <input type="date" id="bookingDate" min="2025-01-01" required>
+    <input type="text" id="accessCode" placeholder="Enter your access code">
+    <button onclick="requestAccess()">Let’s Chat!</button>
 
-    <label for="timeSlot">Choose a Time Slot:</label>
-    <select id="timeSlot" required>
-        <option value="">-- Select Time Slot --</option>
-        <script>
-            const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM",
-                               "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM",
-                               "9:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "1:00 AM", "2:00 AM"];
-            const select = document.getElementById("timeSlot");
-            timeSlots.forEach(time => {
-                const option = document.createElement("option");
-                option.value = time;
-                option.textContent = time;
-                select.appendChild(option);
-            });
-        </script>
-    </select>
-
-    <button onclick="bookChat()">Confirm Booking</button>
-
-    <div id="confirmationMessage" class="confirmation"></div>
-
-    <!-- Hidden Admin Access Link -->
     <div class="admin-link" onclick="showAdminLogin()">Admin Login</div>
 </div>
 
 <!-- Admin Login Modal -->
 <div class="admin-modal" id="adminModal">
     <div class="modal-content">
+        <span class="close-btn" onclick="closeAdminLogin()">&times;</span>
         <h2>Admin Login</h2>
         <input type="text" id="adminUsername" placeholder="Username">
         <input type="password" id="adminPassword" placeholder="Password">
@@ -168,26 +142,25 @@
 </div>
 
 <script>
-    function bookChat() {
-        const date = document.getElementById("bookingDate").value;
-        const time = document.getElementById("timeSlot").value;
+    function requestAccess() {
+        const code = document.getElementById("accessCode").value.trim();
+        const validCodes = ["ABC123", "XYZ456", "LMN789"];
 
-        if (!date || !time) {
-            alert("Please select a valid date and time slot.");
+        if (!validCodes.includes(code)) {
+            alert('Invalid access code! Please check your email.');
             return;
         }
 
-        const bookingCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-
-        document.getElementById("confirmationMessage").style.display = "block";
-        document.getElementById("confirmationMessage").innerHTML = 
-            `🎉 Booking Confirmed! <br> Date: <strong>${date}</strong> <br> Time: <strong>${time}</strong> <br> Your Access Code: <strong>${bookingCode}</strong> <br> Please check your email for details.`;
-
-        console.log(`Booking Confirmed: Date - ${date}, Time - ${time}, Code - ${bookingCode}`);
+        alert("✅ Your request is now in queue. The admin will approve it.");
+        window.location.href = 'chatroom.html?code=' + encodeURIComponent(code);
     }
 
     function showAdminLogin() {
         document.getElementById("adminModal").style.display = 'flex';
+    }
+
+    function closeAdminLogin() {
+        document.getElementById("adminModal").style.display = 'none';
     }
 
     function validateAdmin() {
