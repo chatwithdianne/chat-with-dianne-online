@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Dianne - Welcome</title>
+    <title>Book a Chat - Chat with Dianne</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,23 +17,20 @@
             font-family: 'Poppins', sans-serif;
             background: var(--background);
             color: var(--text-dark);
-        }
-        .container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
             padding: 20px;
-            background-image: url('https://www.transparenttextures.com/patterns/white-diamond.png');
         }
-        .welcome-card {
+        .booking-container {
             background: #fff;
             border-radius: 16px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             padding: 40px;
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
             animation: fadeInUp 1s ease-out;
             position: relative;
         }
@@ -41,38 +38,31 @@
             font-family: 'Playfair Display', serif;
             color: var(--gold);
         }
-        input {
+        input, select, button {
             width: 100%;
             padding: 12px;
-            border: 2px solid var(--primary-pink);
-            border-radius: 8px;
             margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid var(--primary-pink);
+            font-size: 16px;
         }
         button {
             background: var(--gold);
-            color: #fff;
+            color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
         button:hover {
             transform: translateY(-3px);
         }
-        .note {
-            font-size: 12px;
-            color: red;
-            margin-top: 10px;
-        }
-        .book-section {
+        .confirmation {
+            display: none;
             margin-top: 20px;
-        }
-        .book-section a {
-            color: var(--gold);
+            padding: 15px;
+            background: var(--primary-pink);
+            border-radius: 8px;
             font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
         }
         .admin-link {
             margin-top: 30px;
@@ -81,23 +71,9 @@
             color: var(--text-dark);
             opacity: 0.7;
         }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            z-index: 1000;
-        }
-        .popup h2 {
-            margin: 0 0 10px;
-            font-size: 18px;
-            color: var(--gold);
+        .admin-link:hover {
+            text-decoration: underline;
+            opacity: 1;
         }
         .admin-modal {
             display: none;
@@ -109,6 +85,7 @@
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            z-index: 1000;
         }
         .admin-modal .modal-content {
             background: white;
@@ -124,37 +101,53 @@
             font-size: 12px;
             margin-top: 5px;
         }
+        .show-password {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="welcome-card">
-        <h1>✨ Chat with Dianne ✨</h1>
-        <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
+<div class="booking-container">
+    <h1>📅 Book a Chat with Dianne</h1>
+    <p>Select your preferred date and time slot:</p>
 
-        <input type="text" id="accessCode" placeholder="Enter your access code">
-        <button onclick="requestAccess()">Let’s Chat!</button>
+    <label for="bookingDate">Choose a Date:</label>
+    <input type="date" id="bookingDate" min="2025-01-01" required>
 
-        <div class="note">
-            ⏰ Your chat request will be placed in a queue.  
-            <strong>The admin will only accept the queue during your booked time.</strong>  
-            Please check your email confirmation!
-        </div>
+    <label for="timeSlot">Choose a Time Slot:</label>
+    <select id="timeSlot" required>
+        <option value="">-- Select Time Slot --</option>
+        <script>
+            const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM",
+                               "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM",
+                               "9:00 PM", "10:00 PM", "11:00 PM", "12:00 AM", "1:00 AM", "2:00 AM"];
+            const select = document.getElementById("timeSlot");
+            timeSlots.forEach(time => {
+                const option = document.createElement("option");
+                option.value = time;
+                option.textContent = time;
+                select.appendChild(option);
+            });
+        </script>
+    </select>
 
-        <div class="book-section">
-            No code yet? <a onclick="redirectToBooking()">Book a chat</a> and we’ll send your access code via email 💖
-        </div>
+    <button onclick="bookChat()">Confirm Booking</button>
 
-        <!-- Hidden Admin Access Link -->
-        <div class="admin-link" onclick="showAdminLogin()">Admin Login</div>
-    </div>
-</div>
+    <div id="confirmationMessage" class="confirmation"></div>
 
-<!-- Pop-up for "Awaiting Admin Approval" -->
-<div class="popup" id="waitingPopup">
-    <h2>⏳ Awaiting Admin Approval...</h2>
-    <p>Once the admin accepts you, you will enter the chatroom automatically. Check your email for booking time.</p>
+    <!-- Hidden Admin Access Link -->
+    <div class="admin-link" onclick="showAdminLogin()">Admin Login</div>
 </div>
 
 <!-- Admin Login Modal -->
@@ -163,55 +156,57 @@
         <h2>Admin Login</h2>
         <input type="text" id="adminUsername" placeholder="Username">
         <input type="password" id="adminPassword" placeholder="Password">
+        
+        <!-- Show Password Option -->
+        <div class="show-password">
+            <input type="checkbox" id="togglePassword"> Show Password
+        </div>
+
         <button onclick="validateAdmin()">Login</button>
         <div class="error" id="errorMessage"></div>
     </div>
 </div>
 
 <script>
-    function requestAccess() {
-        const code = document.getElementById('accessCode').value.trim();
-        const validCodes = ["ABC123", "XYZ456", "LMN789"];
+    function bookChat() {
+        const date = document.getElementById("bookingDate").value;
+        const time = document.getElementById("timeSlot").value;
 
-        if (!validCodes.includes(code)) {
-            alert('Invalid access code! Please check your email.');
+        if (!date || !time) {
+            alert("Please select a valid date and time slot.");
             return;
         }
 
-        document.getElementById('waitingPopup').style.display = 'block';
+        const bookingCode = Math.random().toString(36).substring(2, 8).toUpperCase();
 
-        setInterval(() => {
-            fetch(`check-approval.json?code=${code}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.approved) {
-                        document.getElementById('waitingPopup').style.display = 'none';
-                        alert("✅ Admin has accepted you! Redirecting to chatroom...");
-                        window.location.href = 'chatroom.html?code=' + encodeURIComponent(code);
-                    }
-                });
-        }, 3000);
+        document.getElementById("confirmationMessage").style.display = "block";
+        document.getElementById("confirmationMessage").innerHTML = 
+            `🎉 Booking Confirmed! <br> Date: <strong>${date}</strong> <br> Time: <strong>${time}</strong> <br> Your Access Code: <strong>${bookingCode}</strong> <br> Please check your email for details.`;
+
+        console.log(`Booking Confirmed: Date - ${date}, Time - ${time}, Code - ${bookingCode}`);
     }
 
     function showAdminLogin() {
-        document.getElementById('adminModal').style.display = 'flex';
+        document.getElementById("adminModal").style.display = 'flex';
     }
 
     function validateAdmin() {
         const username = document.getElementById('adminUsername').value;
         const password = document.getElementById('adminPassword').value;
+        const errorMessage = document.getElementById('errorMessage');
 
         if (username === "admindianne" && password === "Chat@2025!") {
             localStorage.setItem("isAdmin", "true");
             window.location.href = 'admin-dashboard.html';
         } else {
-            document.getElementById('errorMessage').innerText = "Invalid credentials! Please try again.";
+            errorMessage.innerText = "Invalid credentials! Please try again.";
         }
     }
 
-    function redirectToBooking() {
-        window.location.href = "booking.html";
-    }
+    document.getElementById("togglePassword").addEventListener("change", function() {
+        const passwordField = document.getElementById("adminPassword");
+        passwordField.type = this.checked ? "text" : "password";
+    });
 
     if (localStorage.getItem("isAdmin") === "true") {
         window.location.href = 'admin-dashboard.html';
