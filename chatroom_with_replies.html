@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Dianne 💬</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #fbeaec;
+            background-image: radial-gradient(white 10%, transparent 10%), radial-gradient(white 10%, transparent 10%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .chat-container {
+            width: 90%; max-width: 500px; height: 90%;
+            background: white; border: 4px solid black;
+            border-radius: 16px; display: flex; flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); overflow: hidden;
+        }
+        .chat-header {
+            background: #f0c14b; color: black; font-weight: bold;
+            text-align: center; padding: 15px; font-size: 18px; text-transform: uppercase;
+        }
+        .chat-messages {
+            flex: 1; padding: 15px; overflow-y: auto; background: white;
+        }
+        .message {
+            max-width: 80%; margin: 5px 0; padding: 10px; border-radius: 20px;
+            font-size: 14px; word-wrap: break-word; position: relative; cursor: pointer;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .customer { background: #fbeaec; align-self: flex-start; }
+        .dianne { background: #f0c14b; align-self: flex-end; }
+        .reply-bubble {
+            font-size: 12px; background: #fff; padding: 5px;
+            border: 1px solid #ccc; border-radius: 12px;
+            margin-bottom: 5px; color: #555; font-style: italic;
+        }
+        .reaction { position: absolute; bottom: -16px; left: 10px; font-size: 16px; }
+        .reaction-menu, .reply-menu {
+            display: none; position: absolute; bottom: 100%; left: 10px;
+            background: white; border: 1px solid black; border-radius: 10px;
+            padding: 5px; display: flex; gap: 5px; font-size: 18px;
+        }
+        .message:hover .reaction-menu, .message:hover .reply-menu {
+            display: flex;
+        }
+        .input-area {
+            display: flex; padding: 10px; background: white; border-top: 2px solid #f0c14b;
+        }
+        .input-area input {
+            flex: 1; padding: 10px; border: 2px solid black; border-radius: 30px;
+        }
+        .input-area button {
+            margin-left: 8px; background: #f0c14b; border: none;
+            padding: 10px 15px; border-radius: 30px; cursor: pointer; font-weight: bold;
+        }
+        @keyframes fadeIn { from {opacity: 0; transform: translateY(10px);} to {opacity: 1; transform: translateY(0);} }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">💬 Chat with Dianne 💬</div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="input-area">
+        <input type="text" id="chatInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    let replyToMessage = null;
+
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const messageText = input.value.trim();
+        if (!messageText) return;
+
+        addMessage(messageText, 'customer', replyToMessage);
+        replyToMessage = null;
+
+        setTimeout(() => addMessage(getAutoReply(), 'dianne'), 1000);
+
+        input.value = '';
+    }
+
+    function addMessage(text, sender, replyTo) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', sender);
+
+        if (replyTo) {
+            const replyDiv = document.createElement('div');
+            replyDiv.classList.add('reply-bubble');
+            replyDiv.innerText = `Replying to: "${replyTo.innerText}"`;
+            messageDiv.appendChild(replyDiv);
+        }
+
+        messageDiv.innerHTML += `${text}
+            <div class="reaction-menu">
+                <span onclick="setReaction(this, '❤️')">❤️</span>
+                <span onclick="setReaction(this, '👍')">👍</span>
+                <span onclick="setReaction(this, '😂')">😂</span>
+                <span onclick="setReaction(this, '😮')">😮</span>
+                <span onclick="setReaction(this, '😢')">😢</span>
+            </div>
+            <div class="reply-menu">
+                <span onclick="replyTo(this)">↩️ Reply</span>
+            </div>
+        `;
+
+        messageDiv.onclick = () => toggleMenus(messageDiv);
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function toggleMenus(messageDiv) {
+        document.querySelectorAll('.reaction-menu, .reply-menu').forEach(menu => menu.style.display = 'none');
+        messageDiv.querySelector('.reaction-menu').style.display = 'flex';
+        messageDiv.querySelector('.reply-menu').style.display = 'flex';
+    }
+
+    function setReaction(span, emoji) {
+        const message = span.closest('.message');
+        let reaction = message.querySelector('.reaction');
+        if (!reaction) {
+            reaction = document.createElement('div');
+            reaction.classList.add('reaction');
+            message.appendChild(reaction);
+        }
+        reaction.innerText = emoji;
+        message.querySelector('.reaction-menu').style.display = 'none';
+        message.querySelector('.reply-menu').style.display = 'none';
+    }
+
+    function replyTo(span) {
+        replyToMessage = span.closest('.message');
+        const input = document.getElementById('chatInput');
+        input.placeholder = `Replying to: "${replyToMessage.innerText.split('\n')[0]}"`;
+        input.focus();
+        document.querySelectorAll('.reaction-menu, .reply-menu').forEach(menu => menu.style.display = 'none');
+    }
+
+    function getAutoReply() {
+        const replies = ["That's interesting! 💬", "Love that! 💛", "Tell me more!", "I'm listening 💕", "You're doing great!"];
+        return replies[Math.floor(Math.random() * replies.length)];
+    }
+</script>
+
+</body>
+</html>
