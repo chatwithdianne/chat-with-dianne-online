@@ -1,0 +1,168 @@
+/* 🌟 Color Palette & Theme */
+:root {
+    --primary-pink: #f7d6e0;
+    --gold: #d4af37;
+    --text-dark: #333;
+    --background: #fff8f9;
+    --polka-dot: url('https://www.transparenttextures.com/patterns/white-diamond.png'); 
+}
+
+/* 🎀 Page Background (Polka Dot Chic) */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--background) var(--polka-dot);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* 💎 Main Container (Elegant White Box with Gold Border) */
+.container {
+    text-align: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 500px;
+    width: 90%;
+    animation: fadeInUp 1s ease-out;
+    border: 3px solid var(--gold);
+}
+
+/* 🏆 Header (Gold Title with Serif Font) */
+h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 📋 Input Fields & Buttons */
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 2px solid var(--primary-pink);
+    font-size: 16px;
+}
+
+/* 🎨 Buttons (Gold with Elegant Hover Effect) */
+button {
+    background: var(--gold);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    letter-spacing: 1px;
+}
+button:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+/* 🔗 Admin Login Link (Polka-Dot Inspired) */
+.admin-link {
+    margin-top: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--text-dark);
+    opacity: 0.7;
+    text-decoration: underline;
+    font-style: italic;
+}
+.admin-link:hover {
+    opacity: 1;
+}
+
+/* 🔥 Pop-up Modals (Gold Accents & Smooth Transitions) */
+.admin-modal, .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+    width: 90%;
+    max-width: 400px;
+    border-left: 5px solid var(--gold);
+}
+
+/* 📦 Modal Content (Gold Borders) */
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 90%;
+    max-width: 350px;
+    border: 2px solid var(--gold);
+}
+
+/* ❌ Close Button */
+.close-btn {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: var(--gold);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.close-btn:hover {
+    opacity: 0.9;
+}
+
+/* 👀 "Show Password" Option */
+.show-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* 🚨 Error Message */
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* 🎞️ Animations */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 Mobile Optimization */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+    input, button {
+        font-size: 14px;
+    }
+}
