@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard - Chat with Dianne</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff8f9;
+        }
+        header {
+            background-color: #f7d6e0;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            border-bottom: 4px solid #d4af37;
+        }
+        nav {
+            background: #d4af37;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #f7d6e0;
+        }
+        th {
+            background: #f7d6e0;
+            padding: 10px;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            background: #d4af37;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .logout {
+            background: #333;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>✨ Admin Dashboard - Chat with Dianne ✨</header>
+<nav>
+    <a href="admin-dashboard.html">Dashboard</a>
+    <a href="admin-encode-codes.html">Encode Codes</a>
+    <a href="admin-customer-history.html">Chat History</a>
+    <a href="admin-profile.html">Profile Settings</a>
+    <a class="logout" href="index.html">Log Out</a>
+</nav>
+
+<div class="container">
+
+    <!-- Pending Bookings Section -->
+    <div class="section">
+        <h2>📅 Bookings Awaiting Code Encoding</h2>
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer Name</th>
+                <th>Booked Date & Time</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>2025-001</td>
+                <td>Jane Doe</td>
+                <td>2025-03-10 10:00 AM</td>
+                <td><button onclick="window.location.href='admin-encode-codes.html?booking=2025-001'">Encode Code</button></td>
+            </tr>
+            <!-- Repeat for demo -->
+        </table>
+    </div>
+
+    <!-- Bookings with Codes -->
+    <div class="section">
+        <h2>🔑 Bookings with Encoded Codes</h2>
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer Name</th>
+                <th>Booked Date & Time</th>
+                <th>Code</th>
+            </tr>
+            <tr>
+                <td>2025-002</td>
+                <td>John Smith</td>
+                <td>2025-03-12 2:00 PM</td>
+                <td>ABCD1234</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Completed Bookings -->
+    <div class="section">
+        <h2>✅ Completed Bookings</h2>
+        <table>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer Name</th>
+                <th>Booked Date & Time</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>2025-003</td>
+                <td>Maria Garcia</td>
+                <td>2025-03-01 9:00 AM</td>
+                <td>Completed</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    // Example only - in real life, data will be fetched from backend/database.
+    // This is just to simulate dynamic content for now.
+</script>
+
+</body>
+</html>
