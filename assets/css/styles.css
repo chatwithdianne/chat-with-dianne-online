@@ -248,3 +248,69 @@ button:hover {
 .popup .close-btn:hover {
     opacity: 0.9;
 }
+/* 🎯 Admin Dashboard */
+.admin-dashboard {
+    text-align: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    animation: fadeInUp 1s ease-out;
+    border: 3px solid var(--gold);
+    margin-bottom: 20px;
+}
+
+.admin-dashboard h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 28px;
+}
+
+/* 📋 Queue List */
+.queue-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+}
+
+.queue-container h2 {
+    color: var(--gold);
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* 📜 Queue Items */
+.queue-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.queue-container li {
+    background: #fff8e1;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ✅ Approve Button */
+.queue-container button {
+    background: var(--gold);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+}
+.queue-container button:hover {
+    opacity: 0.8;
+}
