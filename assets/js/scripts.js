@@ -374,3 +374,66 @@ function closePopup() {
 if (window.location.pathname.includes("records.html")) {
     loadRecords();
 }
+// ✅ Show "Add Code" Pop-up
+function showAddRecordPopup() {
+    document.getElementById("addRecordPopup").style.display = "flex";
+}
+
+// ✅ Close Pop-ups
+function closePopup() {
+    document.getElementById("addRecordPopup").style.display = "none";
+}
+
+// ✅ Add New Record from Pop-up Form
+function addRecord() {
+    const accessCode = document.getElementById("recordAccessCode").value.trim();
+    const customerName = document.getElementById("recordCustomerName").value.trim();
+    const date = document.getElementById("recordDate").value;
+    const time = document.getElementById("recordTime").value;
+    const duration = document.getElementById("recordDuration").value.trim();
+    const status = document.getElementById("recordStatus").value;
+
+    if (!accessCode || !customerName || !date || !time || !duration) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    let records = JSON.parse(localStorage.getItem("chatRecords")) || [];
+    records.push({ accessCode, customerName, date, time, duration, status });
+    localStorage.setItem("chatRecords", JSON.stringify(records));
+
+    closePopup();
+    loadRecords();
+}
+
+// ✅ Load Records to Table
+function loadRecords() {
+    const recordsTable = document.getElementById("recordsTable");
+    recordsTable.innerHTML = "";
+
+    const records = JSON.parse(localStorage.getItem("chatRecords")) || [];
+
+    if (records.length === 0) {
+        recordsTable.innerHTML = "<tr><td colspan='6'>No records found.</td></tr>";
+        return;
+    }
+
+    records.forEach((record, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${record.accessCode}</td>
+            <td>${record.customerName}</td>
+            <td>${record.date}</td>
+            <td>${record.time}</td>
+            <td>${record.duration}</td>
+            <td>
+                <select onchange="updateStatus(${index}, this.value)">
+                    <option value="Pending" ${record.status === "Pending" ? "selected" : ""}>Pending</option>
+                    <option value="Completed" ${record.status === "Completed" ? "selected" : ""}>Completed</option>
+                    <option value="No Show" ${record.status === "No Show" ? "selected" : ""}>No Show</option>
+                </select>
+            </td>
+        `;
+        recordsTable.appendChild(row);
+    });
+}
