@@ -144,46 +144,122 @@ function logoutAdmin() {
     window.location.href = 'index.html';
 }
 
-// ✅ Function: Fetch Chat Requests in Queue (Simulated)
+// ✅ Load Queue Requests
 function loadQueue() {
     const queueList = document.getElementById("queueList");
     queueList.innerHTML = ""; // Clear existing list
 
-    // Simulated queue data (Replace with API fetch in real implementation)
-    const queueRequests = [
-        { name: "Alice", code: "ABC123" },
-        { name: "Bob", code: "XYZ456" },
-        { name: "Charlie", code: "LMN789" }
-    ];
+    // Simulated queue data
+    const queueRequests = JSON.parse(localStorage.getItem("chatQueue")) || [];
 
     if (queueRequests.length === 0) {
         queueList.innerHTML = "<li>No pending chat requests.</li>";
         return;
     }
 
-    queueRequests.forEach((request) => {
+    queueRequests.forEach((request, index) => {
         const listItem = document.createElement("li");
         listItem.innerHTML = `
             <strong>${request.name}</strong> - Code: ${request.code}
-            <button onclick="approveChat('${request.code}')">✅ Approve</button>
+            <button onclick="approveChat('${request.code}', ${index})">✅ Approve</button>
         `;
         queueList.appendChild(listItem);
     });
 }
 
-// ✅ Function: Approve Chat Request (Redirects Customer to `chatroom.html`)
-function approveChat(code) {
-    // Simulated admin approval (In real implementation, this should update a database)
-    alert(`✅ Customer with code ${code} has been approved! They will now enter the chatroom.`);
+// ✅ Approve Chat Request (Redirect Customer & Admin to `chatroom.html`)
+function approveChat(code, index) {
+    alert(`✅ Customer with code ${code} has been approved! Redirecting to the chatroom.`);
     
-    // Simulate updating a file (This would be replaced with an API call)
-    fetch(`check-approval.json?code=${code}`, { method: "POST" });
+    // Remove approved request from queue
+    let queueRequests = JSON.parse(localStorage.getItem("chatQueue")) || [];
+    queueRequests.splice(index, 1);
+    localStorage.setItem("chatQueue", JSON.stringify(queueRequests));
 
-    // Remove from queue list
-    loadQueue();
+    loadQueue(); // Refresh queue list
+
+    // Redirect to chatroom
+    window.location.href = `chatroom.html?code=${encodeURIComponent(code)}`;
 }
 
-// 🔄 Load queue when Admin Dashboard opens
+// ✅ Load Valid Access Codes
+function loadCodes() {
+    const codeList = document.getElementById("codeList");
+    codeList.innerHTML = ""; // Clear existing list
+
+    const validCodes = JSON.parse(localStorage.getItem("validCodes")) || [];
+
+    if (validCodes.length === 0) {
+        codeList.innerHTML = "<li>No access codes added yet.</li>";
+        return;
+    }
+
+    validCodes.forEach((code, index) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+            <strong>${code}</strong>
+            <button onclick="removeCode(${index})">❌ Remove</button>
+        `;
+        codeList.appendChild(listItem);
+    });
+}
+
+// ✅ Add New Valid Access Code
+function addCode() {
+    const newCode = document.getElementById("newCode").value.trim();
+    if (!newCode) {
+        alert("Please enter a valid access code.");
+        return;
+    }
+
+    let validCodes = JSON.parse(localStorage.getItem("validCodes")) || [];
+    if (validCodes.includes(newCode)) {
+        alert("This code already exists.");
+        return;
+    }
+
+    validCodes.push(newCode);
+    localStorage.setItem("validCodes", JSON.stringify(validCodes));
+    document.getElementById("newCode").value = "";
+    loadCodes();
+}
+
+// ✅ Remove Access Code
+function removeCode(index) {
+    let validCodes = JSON.parse(localStorage.getItem("validCodes")) || [];
+    validCodes.splice(index, 1);
+    localStorage.setItem("validCodes", JSON.stringify(validCodes));
+    loadCodes();
+}
+
+// 🔄 Load Queue & Valid Codes When Admin Dashboard Opens
 if (window.location.pathname.includes("admin-dashboard.html")) {
     loadQueue();
+    loadCodes();
+}
+
+// ✅ Validate Customer Code (Used in `index.html`)
+function requestAccess() {
+    const code = document.getElementById("accessCode").value.trim();
+    const validCodes = JSON.parse(localStorage.getItem("validCodes")) || [];
+
+    if (!validCodes.includes(code)) {
+        showPopup("Invalid Code", "Oops! This code is not recognized. Please check your email and try again.", "invalid");
+        return;
+    }
+
+    // 🎉 Show "Waiting in Queue" Pop-up
+    showPopup("You're in Queue!", `
+        🎉 Thank you for entering your code! <br><br>
+        Your chat request is now in queue and awaiting Dianne's approval. <br><br>
+        🔔 **Please double-check your scheduled booking time** as you will only be accommodated **during your scheduled slot**.
+    `, "queue");
+
+    // Store in queue
+    let queueRequests = JSON.parse(localStorage.getItem("chatQueue")) || [];
+    queueRequests.push({ name: "Customer", code });
+    localStorage.setItem("chatQueue", JSON.stringify(queueRequests));
+
+    // Start Checking for Admin Approval
+    checkAdminApproval(code);
 }
