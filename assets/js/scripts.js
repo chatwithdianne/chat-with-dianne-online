@@ -133,3 +133,57 @@ function closePopup() {
     const popups = document.querySelectorAll(".popup");
     popups.forEach(popup => popup.remove());
 }
+// ✅ Function: Protect Admin Dashboard (Redirect to `index.html` if Not Logged In)
+if (window.location.pathname.includes("admin-dashboard.html") && !localStorage.getItem("isAdmin")) {
+    window.location.href = "index.html";
+}
+
+// ✅ Function: Logout Admin
+function logoutAdmin() {
+    localStorage.removeItem("isAdmin");
+    window.location.href = 'index.html';
+}
+
+// ✅ Function: Fetch Chat Requests in Queue (Simulated)
+function loadQueue() {
+    const queueList = document.getElementById("queueList");
+    queueList.innerHTML = ""; // Clear existing list
+
+    // Simulated queue data (Replace with API fetch in real implementation)
+    const queueRequests = [
+        { name: "Alice", code: "ABC123" },
+        { name: "Bob", code: "XYZ456" },
+        { name: "Charlie", code: "LMN789" }
+    ];
+
+    if (queueRequests.length === 0) {
+        queueList.innerHTML = "<li>No pending chat requests.</li>";
+        return;
+    }
+
+    queueRequests.forEach((request) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+            <strong>${request.name}</strong> - Code: ${request.code}
+            <button onclick="approveChat('${request.code}')">✅ Approve</button>
+        `;
+        queueList.appendChild(listItem);
+    });
+}
+
+// ✅ Function: Approve Chat Request (Redirects Customer to `chatroom.html`)
+function approveChat(code) {
+    // Simulated admin approval (In real implementation, this should update a database)
+    alert(`✅ Customer with code ${code} has been approved! They will now enter the chatroom.`);
+    
+    // Simulate updating a file (This would be replaced with an API call)
+    fetch(`check-approval.json?code=${code}`, { method: "POST" });
+
+    // Remove from queue list
+    loadQueue();
+}
+
+// 🔄 Load queue when Admin Dashboard opens
+if (window.location.pathname.includes("admin-dashboard.html")) {
+    loadQueue();
+}
