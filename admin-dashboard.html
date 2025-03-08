@@ -9,19 +9,49 @@
 </head>
 <body>
 
-<!-- 🏆 Admin Dashboard Header -->
-<div class="admin-dashboard">
-    <h1>🔑 Admin Dashboard</h1>
-    <p>Manage customer chat requests in queue.</p>
-    <button onclick="logoutAdmin()">🚪 Logout</button>
-</div>
+<!-- 🏆 Admin Dashboard with Sidebar Menu -->
+<div class="admin-container">
 
-<!-- 📌 Queue List -->
-<div class="queue-container">
-    <h2>📋 Chat Requests Waiting for Approval</h2>
-    <ul id="queueList">
-        <li>Loading requests...</li>
-    </ul>
+    <!-- 📌 Sidebar Menu (Left Panel) -->
+    <div class="sidebar">
+        <h2>🔑 Admin Panel</h2>
+        <p>Manage chat requests & access codes</p>
+        <button onclick="logoutAdmin()">🚪 Logout</button>
+        <hr>
+
+        <!-- 📌 Navigation Links -->
+        <ul class="menu">
+            <li><a href="admin-dashboard.html">📋 Dashboard</a></li>
+            <li><a href="records.html">📜 Chat Records</a></li>
+        </ul>
+    </div>
+
+    <!-- 📋 Main Content (Right Panel) -->
+    <div class="main-content">
+        
+        <!-- 📜 Queue List -->
+        <div class="queue-container">
+            <h2>📋 Chat Requests Waiting for Approval</h2>
+            <ul id="queueList">
+                <li>Loading requests...</li>
+            </ul>
+        </div>
+
+        <!-- 📝 Add New Access Code -->
+        <div class="code-container">
+            <h2>🔑 Add Valid Access Code</h2>
+            <input type="text" id="customerName" placeholder="Customer Name">
+            <input type="text" id="newCode" placeholder="Enter New Access Code">
+            <button onclick="addCode()">➕ Add Code</button>
+
+            <h3>✅ Recorded Valid Codes</h3>
+            <input type="text" id="searchCode" placeholder="🔍 Search Access Codes" onkeyup="searchCodes()">
+            <ul id="codeList">
+                <li>Loading...</li>
+            </ul>
+        </div>
+
+    </div>
 </div>
 
 <!-- ✅ Scripts -->
