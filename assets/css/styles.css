@@ -69,26 +69,36 @@ button:hover {
     opacity: 0.9;
 }
 
-/* 📌 Admin Login (Upper Left Corner) */
+/* 📌 Hidden Admin Login (Upper Left Corner) */
 .admin-login-container {
     position: absolute;
-    top: 10px;
-    left: 15px;
-    background: var(--gold);
-    padding: 8px 15px;
+    top: 5px;
+    left: 5px;
+    padding: 5px 10px;
     border-radius: 8px;
     cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0; /* 🔒 Initially Hidden */
 }
+
+/* 👀 Admin Login Appears on Hover */
 .admin-login-container:hover {
-    transform: scale(1.05);
+    opacity: 1;
 }
+
+/* 🔑 Admin Link Text */
 .admin-link {
     color: white;
-    font-size: 14px;
+    background: var(--gold);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
     text-decoration: none;
+    cursor: pointer;
+}
+.admin-link:hover {
+    opacity: 0.9;
 }
 
 /* 🔥 Pop-up Modals (Gold Accents & Smooth Transitions) */
