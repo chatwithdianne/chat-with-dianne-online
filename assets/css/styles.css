@@ -89,7 +89,6 @@ button:hover {
 /* 🔑 Admin Link Text */
 .admin-link {
     color: white;
-    background: var(--gold);
     padding: 5px 10px;
     border-radius: 6px;
     font-size: 12px;
