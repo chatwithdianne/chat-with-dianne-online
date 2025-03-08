@@ -146,18 +146,6 @@ button:hover {
     opacity: 0.9;
 }
 
-/* 👀 "Show Password" Option */
-.show-password {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 5px;
-    font-style: italic;
-}
-
 /* 🚨 Error Message */
 .error {
     color: red;
@@ -248,69 +236,54 @@ button:hover {
 .popup .close-btn:hover {
     opacity: 0.9;
 }
-/* 🎯 Admin Dashboard */
-.admin-dashboard {
-    text-align: center;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    padding: 40px;
-    max-width: 600px;
-    width: 90%;
-    animation: fadeInUp 1s ease-out;
-    border: 3px solid var(--gold);
-    margin-bottom: 20px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Chat with Dianne</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
 
-.admin-dashboard h1 {
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    font-size: 28px;
-}
+<!-- 🏆 Messenger-Style Admin Dashboard -->
+<div class="admin-container">
 
-/* 📋 Queue List */
-.queue-container {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
-}
+    <!-- 📌 Sidebar (Left Panel) -->
+    <div class="sidebar">
+        <h2>🔑 Admin Panel</h2>
+        <p>Manage chat requests & access codes</p>
+        <button onclick="logoutAdmin()">🚪 Logout</button>
+    </div>
 
-.queue-container h2 {
-    color: var(--gold);
-    font-size: 22px;
-    margin-bottom: 10px;
-}
+    <!-- 📋 Main Content (Right Panel) -->
+    <div class="main-content">
+        
+        <!-- 📜 Queue List -->
+        <div class="queue-container">
+            <h2>📋 Chat Requests Waiting for Approval</h2>
+            <ul id="queueList">
+                <li>Loading requests...</li>
+            </ul>
+        </div>
 
-/* 📜 Queue Items */
-.queue-container ul {
-    list-style: none;
-    padding: 0;
-}
+        <!-- 📝 Add New Access Code -->
+        <div class="code-container">
+            <h2>🔑 Add Valid Access Code</h2>
+            <input type="text" id="newCode" placeholder="Enter New Access Code">
+            <button onclick="addCode()">➕ Add Code</button>
+            <h3>✅ Recorded Valid Codes</h3>
+            <ul id="codeList">
+                <li>Loading...</li>
+            </ul>
+        </div>
 
-.queue-container li {
-    background: #fff8e1;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 8px 0;
-    font-size: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    </div>
+</div>
 
-/* ✅ Approve Button */
-.queue-container button {
-    background: var(--gold);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-size: 16px;
-}
-.queue-container button:hover {
-    opacity: 0.8;
-}
+<!-- ✅ Scripts -->
+<script src="assets/js/scripts.js"></script>
+
+</body>
+</html>
