@@ -24,6 +24,24 @@
     <p class="admin-link" onclick="showAdminLogin()">Admin Login</p>
 </div>
 
+<!-- 🛠️ Admin Login Button (Upper Left Corner) -->
+<div class="admin-login-container">
+    <p class="admin-link" onclick="showAdminLogin()">🔑 Admin Login</p>
+</div>
+
+<div class="container">
+    <h1>✨ Chat with Dianne ✨</h1>
+    <p>Hey there! Let’s catch up — I’m so ready to chat with you 💕<br>Pop your access code below and let’s get started!</p>
+
+    <input type="text" id="accessCode" placeholder="Enter your access code">
+    <button onclick="requestAccess()">Let’s Chat!</button>
+
+    <!-- 📢 Booking Message -->
+    <p class="booking-message">
+        Don't have a code? <a href="#" onclick="showBookingPopup()">Book a chat</a> and I'll send you your access code!
+    </p>
+</div>
+
 <!-- 🛠️ Admin Login Pop-up -->
 <div class="admin-modal" id="adminModal">
     <div class="modal-content">
