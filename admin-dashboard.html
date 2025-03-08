@@ -9,48 +9,88 @@
 </head>
 <body>
 
-<!-- 🏆 Admin Dashboard with Sidebar Menu -->
-<div class="admin-container">
+<!-- 🏆 SAP-Style Admin Dashboard -->
+<div class="dashboard-container">
 
-    <!-- 📌 Sidebar Menu (Left Panel) -->
+    <!-- 📌 Top Navigation Bar -->
+    <div class="top-nav">
+        <h2>✨ Admin Dashboard</h2>
+        <button class="logout-button" onclick="logoutAdmin()">🚪 Logout</button>
+    </div>
+
+    <!-- 📂 Sidebar Menu (Collapsible) -->
     <div class="sidebar">
-        <h2>🔑 Admin Panel</h2>
-        <p>Manage chat requests & access codes</p>
-        <button onclick="logoutAdmin()">🚪 Logout</button>
-        <hr>
-
-        <!-- 📌 Navigation Links -->
-        <ul class="menu">
-            <li><a href="admin-dashboard.html">📋 Dashboard</a></li>
-            <li><a href="records.html">📜 Chat Records</a></li>
+        <ul>
+            <li onclick="showSection('dashboard')">📊 Dashboard</li>
+            <li onclick="showSection('records')">📜 Chat Records</li>
+            <li onclick="showSection('queue')">📩 Chat Queue</li>
+            <li onclick="showSection('settings')">⚙️ Settings</li>
+            <li onclick="showAddRecordPopup()">➕ Add Code</li>
         </ul>
     </div>
 
-    <!-- 📋 Main Content (Right Panel) -->
+    <!-- 🖥️ Main Content (Dynamic Workspace) -->
     <div class="main-content">
-        
-        <!-- 📜 Queue List -->
-        <div class="queue-container">
-            <h2>📋 Chat Requests Waiting for Approval</h2>
+        <div id="dashboard" class="content-section">
+            <h2>📊 Admin Overview</h2>
+            <p>View key statistics and quick actions here.</p>
+        </div>
+
+        <div id="records" class="content-section hidden">
+            <h2>📜 Chat Records</h2>
+            <input type="text" id="searchRecords" placeholder="🔍 Search Access Codes" onkeyup="searchRecords()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Access Code</th>
+                        <th>Customer Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Duration</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsTable">
+                    <tr><td colspan="6">Loading records...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="queue" class="content-section hidden">
+            <h2>📩 Chat Requests Waiting for Approval</h2>
             <ul id="queueList">
                 <li>Loading requests...</li>
             </ul>
         </div>
 
-        <!-- 📝 Add New Access Code -->
-        <div class="code-container">
-            <h2>🔑 Add Valid Access Code</h2>
-            <input type="text" id="customerName" placeholder="Customer Name">
-            <input type="text" id="newCode" placeholder="Enter New Access Code">
-            <button onclick="addCode()">➕ Add Code</button>
-
-            <h3>✅ Recorded Valid Codes</h3>
-            <input type="text" id="searchCode" placeholder="🔍 Search Access Codes" onkeyup="searchCodes()">
-            <ul id="codeList">
-                <li>Loading...</li>
-            </ul>
+        <div id="settings" class="content-section hidden">
+            <h2>⚙️ Admin Settings</h2>
+            <p>Modify dashboard settings, themes, or notifications.</p>
         </div>
+    </div>
 
+</div>
+
+<!-- 💬 Chatbox Pop-ups -->
+<div class="chatbox-container" id="chatbox1"></div>
+<div class="chatbox-container" id="chatbox2"></div>
+
+<!-- ➕ Add Code Pop-up -->
+<div class="popup" id="addRecordPopup">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Add New Access Code</h2>
+        <input type="text" id="recordAccessCode" placeholder="Access Code">
+        <input type="text" id="recordCustomerName" placeholder="Customer Name">
+        <input type="date" id="recordDate">
+        <input type="time" id="recordTime">
+        <input type="text" id="recordDuration" placeholder="Duration (e.g., 30 mins, 1 hour)">
+        <select id="recordStatus">
+            <option value="Pending">Pending</option>
+            <option value="Completed">Completed</option>
+            <option value="No Show">No Show</option>
+        </select>
+        <button onclick="addRecord()">Save</button>
     </div>
 </div>
 
